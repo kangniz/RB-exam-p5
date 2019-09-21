@@ -169,7 +169,7 @@ export default class TenementAdd extends Component {
               <Option value={4}>4</Option>
               <Option value={5}>5</Option>
             </Select>
-            <span>室&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>室&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <Select defaultValue="1" style={{ width: 60 }} onChange={this.onChangeSaloon}>
               <Option value={1}>1</Option>
               <Option value={2}>2</Option>
@@ -177,7 +177,7 @@ export default class TenementAdd extends Component {
               <Option value={4}>4</Option>
               <Option value={5}>5</Option>
             </Select>
-            <span>厅&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>厅&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <Select defaultValue="1" style={{ width: 60 }} onChange={this.onChangeToilet}>
               <Option value={1}>1</Option>
               <Option value={2}>2</Option>

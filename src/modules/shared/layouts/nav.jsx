@@ -36,7 +36,7 @@ class Nav extends React.Component {
                 }}
                 />
               </div>
-              <div className="nav__tit">{this.props.navType === 'detail' ? '房源详情' : '新增房源'}</div>
+              <div className="nav__tit">{this.props.navType === 'detail' ? '房源详情' : '发布房源'}</div>
             </div>
             : <div>
               <div className="nav__left">
