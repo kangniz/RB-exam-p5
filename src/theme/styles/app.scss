@@ -30,6 +30,7 @@ body {
     float: left;
     color: #fff;
     .anticon {
+      margin-top: 10px;
       font-size: 30px;
       cursor: pointer;
     }
@@ -40,6 +41,9 @@ body {
   }
   &__right {
     float: right;
+    .fish-btn {
+      margin-right: 10px;
+    }
   }
   &__tit {
     overflow: hidden;
@@ -54,6 +58,15 @@ body {
   border-bottom: 1px solid #ddd;
   &__text {
     padding-left: 20px;
+  }
+}
+.load {
+  text-align: center;
+  a {
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    color: #999;
   }
 }
 
@@ -170,6 +183,9 @@ body {
       .form__lab {
         float: none;
       }
+    }
+    .fish-btn-primary {
+      margin-right: 20px;
     }
   }
   &__lab {

@@ -1,10 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-// import {routerShape} from 'react-router'
 import axios from 'axios'
 export default class Detail extends Component {
-  // static contextTypes = {
-  //   router: routerShape.isRequired
-  // }
   static contextTypes = {
     router: PropTypes.object
   }

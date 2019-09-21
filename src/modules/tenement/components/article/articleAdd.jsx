@@ -1,14 +1,27 @@
 import React, {Component} from 'react'
-// import { Button, Input, Select, Radio } from 'fish'
-// const Option = Select.Option
-// const { TextArea } = Input
 import {Input, Radio, Select, Button, InputNumber, Modal, message} from 'fish'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {setNavType} from 'modules/shared/reducer/actions'
 const TextArea = Input.TextArea
 const { Option } = Select
 const RadioGroup = Radio.Group
 
+@connect(
+  state => {
+    return {
+    }
+  },
+  {
+    setNavType
+  }
+)
+
 export default class TenementAdd extends Component {
+  static propTypes = {
+    setNavType: React.PropTypes.func
+  }
+
   state = {
     title: '',
     description: '',
@@ -22,44 +35,38 @@ export default class TenementAdd extends Component {
     pic: ''
   }
   onChange = (e) => {
-    console.log('radio checked', e.target.value)
-    this.setState({
-      value: e.target.value
-    })
-  }
-  handleChange = (e) => {
     this.setState({
       [e.target.name]: this.stripscript(e.target.value)
     })
   }
-  handleChange2 = (e) => {
+  onPicChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
-  stripscript = s => {
+  stripscript = value => {
     var pattern = new RegExp(
       "[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
     )
-    var rs = ''
-    for (var i = 0; i < s.length; i++) {
-      rs = rs + s.substr(i, 1).replace(pattern, '')
+    var result = ''
+    for (var i = 0; i < value.length; i++) {
+      result = result + value.substr(i, 1).replace(pattern, '')
     }
-    return rs
+    return result
   }
-  onRadioChange = e => {
+  onTypeChange = e => {
     this.setState({
       type: e.target.value
     })
   }
-  onNumChange = v => {
+  onPriceChange = p => {
     this.setState({
-      price: v
+      price: p
     })
   }
-  onSizeChange = v => {
+  onSizeChange = s => {
     this.setState({
-      size: v
+      size: s
     })
   }
   onChangeRoom = romm => {
@@ -77,10 +84,11 @@ export default class TenementAdd extends Component {
       toiled
     })
   }
-  handleGoBack = () => {
+  formBack = () => {
     this.props.router.goBack()
+    this.props.setNavType('')
   }
-  handleSubmit = () => {
+  formSubmit = () => {
     const { title, price, description, pic, size } = this.state
     if (!title) {
       message.error('请输入标题')
@@ -92,10 +100,6 @@ export default class TenementAdd extends Component {
     }
     if (!description) {
       message.error('请输入描述')
-      return
-    }
-    if (!pic) {
-      message.error('请输入图片地址')
       return
     }
     if (!size) {
@@ -125,10 +129,9 @@ export default class TenementAdd extends Component {
       zIndex: 9999,
       onOk: () => {
         axios.post('/api/v0.1/articles', values)
-        this.handleGoBack()
+        this.formBack()
       },
       onCancel: () => {
-        this.handleGoBack()
       }
     })
   }
@@ -138,9 +141,9 @@ export default class TenementAdd extends Component {
         <li className="form__item">
           <div className="form__lab">出租方式：</div>
           <div className="form__con">
-            <RadioGroup onChange={this.onRadioChange} value={this.state.type}>
+            <RadioGroup onChange={this.onTypeChange} value={this.state.type}>
+              <Radio value={0}>整组</Radio>
               <Radio value={1}>合租</Radio>
-              <Radio value={2}>整组</Radio>
             </RadioGroup>
           </div>
         </li>
@@ -148,12 +151,10 @@ export default class TenementAdd extends Component {
           <div className="form__lab">房屋面积：</div>
           <div className="form__con">
             <InputNumber
-              id="size"
-              name="size"
-              min={1}
-              max={10000000}
-              style={{ width: 200 }}
-              placeholder={'请输入房屋面积'}
+              min={10}
+              max={10000}
+              style={{ width: '100%' }}
+              placeholder={'请输入问题正整数'}
               onChange={this.onSizeChange}
             />
           </div>
@@ -195,8 +196,8 @@ export default class TenementAdd extends Component {
               name="price"
               min={1}
               max={10000000}
-              style={{ width: 200 }}
-              onChange={this.onNumChange}
+              style={{ width: '100%' }}
+              onChange={this.onPriceChange}
               placeholder={'请输入正整数'}
             />
           </div>
@@ -210,7 +211,7 @@ export default class TenementAdd extends Component {
               name="title"
               maxLength={50}
               placeholder={'50字以内的中文、英文或数字'}
-              onChange={this.handleChange}
+              onChange={this.onChange}
             />
           </div>
         </li>
@@ -223,7 +224,7 @@ export default class TenementAdd extends Component {
               showCounter
               id="description"
               name="description"
-              onChange={this.handleChange}
+              onChange={this.onChange}
             />
           </div>
         </li>
@@ -234,13 +235,13 @@ export default class TenementAdd extends Component {
               placeholder="请输入正确的url，每行一个图片url，最多5张"
               id="pic"
               name="pic"
-              onChange={this.handleChange2}
+              onChange={this.onPicChange}
             />
           </div>
         </li>
         <li className="form__item form__item--block">
-          <Button type="primary" style={{marginRight: '10px'}} onClick={this.handleSubmit}>提交</Button>
-          <Button onClick={this.handleGoBack}>取消</Button>
+          <Button type="primary" onClick={this.formSubmit}>提交</Button>
+          <Button onClick={this.formBack}>取消</Button>
         </li>
       </ul>
     </div>

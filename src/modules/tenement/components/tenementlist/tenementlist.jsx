@@ -1,7 +1,18 @@
 import React, {Component, PropTypes} from 'react'
 import moment from 'moment'
+import {connect} from 'react-redux'
+import {setNavType} from 'modules/shared/reducer/actions'
 const TIME_FORMAT = 'YYYY-MM-DD'
 
+@connect(
+  state => {
+    return {
+    }
+  },
+  {
+    setNavType
+  }
+)
 export default class TenementItem extends Component {
   static contextTypes = {
     renementItem: PropTypes.array,
@@ -12,32 +23,31 @@ export default class TenementItem extends Component {
     this.state = {
     }
   }
-  goDetail = (id) => {
-    // this.props.setNavType('detail')
+  tenementDetail = (id) => {
+    this.props.setNavType('detail')
     this.context.router.push(`/detail/${id}`)
   }
 
-  getDateDiff(dateTimeStamp) {
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
+  getDateDiff(timeData) {
+    const m = 1000 * 60
+    const h = m * 60
+    const day = h * 24
     let result = ''
-    const idata = dateTimeStamp
     const now = new Date().getTime()
-    const diffValue = now - idata
-    if (diffValue < 0) {
+    const timeGap = now - timeData
+    if (timeGap < 0) {
       return
     }
-    const dayC = diffValue / day
-    const hourC = diffValue / hour
-    const minC = diffValue / minute
+    const dayGap = timeGap / day
+    const hourGap = timeGap / h
+    const minGap = timeGap / m
 
-    if (dayC >= 1) {
-      result = idata && moment(idata).format(TIME_FORMAT)
-    } else if (hourC >= 1) {
-      result = parseInt(hourC) + '个小时前'
-    } else if (minC >= 1) {
-      result = parseInt(minC) + '分钟前'
+    if (dayGap >= 1) {
+      result = timeData && moment(timeData).format(TIME_FORMAT)
+    } else if (hourGap >= 1) {
+      result = parseInt(hourGap) + '个小时前'
+    } else if (minGap >= 1) {
+      result = parseInt(minGap) + '分钟前'
     } else result = '刚刚'
     return result
   }
@@ -45,14 +55,14 @@ export default class TenementItem extends Component {
   render() {
     const {renementItem} = this.props
     return <li className="piclist__item" onClick={() => {
-      this.goDetail(renementItem.id)
+      this.tenementDetail(renementItem.id)
     }}>
       <div className="piclist__pic">
-        {/* <img src="" alt=""/> */}
+        <img src={renementItem.pic.length > 0 ? renementItem.pic[0] : ''} alt="" />
       </div>
       <div className="piclist__con">
         <div className="piclist__tit">{renementItem.title}</div>
-        <div className="piclist__sub">{renementItem.type} | {renementItem.romm}室{renementItem.saloon}厅{renementItem.toiled}卫 | {renementItem.size}㎡</div>
+        <div className="piclist__sub"><span>{renementItem.type === 1 ? '合租' : '整租'}</span> | {renementItem.romm}室{renementItem.saloon}厅{renementItem.toiled}卫 | {renementItem.size}㎡</div>
         <div className="piclist__add">{renementItem.addr}</div>
         <div className="piclist__foot">
           <span className="time">{this.getDateDiff(renementItem.date)}</span>
