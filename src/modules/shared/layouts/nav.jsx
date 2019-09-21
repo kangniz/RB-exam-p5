@@ -1,30 +1,56 @@
 import React from 'react'
-import { IndexLink } from 'react-router'
-import { defineMessages, intlShape, injectIntl } from 'react-intl'
-const messages = defineMessages({
-  home: {
-    id: 'home',
-    defaultMessage: '首页'
-  }
-})
+import {Button, Icon} from 'fish'
+import {push} from 'react-router-redux/lib/actions'
+import {connect} from 'react-redux'
+import {getLangList, setNavType} from 'modules/shared/reducer/actions'
 
-@injectIntl
+@connect(
+  state => {
+    return {
+      langList: state.sharedModel.langList,
+      navType: state.sharedModel.navType
+    }
+  },
+  {
+    getLangList,
+    setNavType,
+    push
+  }
+)
 class Nav extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired
+    navType: React.PropTypes.string,
+    push: React.PropTypes.func.isRequired,
+    setNavType: React.PropTypes.func
   }
   render() {
-    const { formatMessage } = this.props.intl
-    const needFac = window.__config.packageJson && window.__config.packageJson.needFac
-    const langList = needFac && window.__config.langList ? window.__config.langList : []
     return (
-      <nav style={{ marginBottom: 10 }}>
-        <IndexLink to="/">{formatMessage(messages.home)}</IndexLink>
-        {langList.map(langItem => (
-          <a key={langItem} href={`${global.location.pathname}?locale=${langItem}`} style={{ paddingLeft: 10 }}>
-            {formatMessage({ id: `lang_${langItem}` }) || langItem}
-          </a>
-        ))}
+      <nav className="nav">
+        {
+          this.props.navType
+            ? <div>
+              <div className="nav__left">
+                <Icon type="left" onClick={() => {
+                  this.props.setNavType('')
+                  this.props.push('/')
+                }}
+                />
+              </div>
+              <div className="nav__tit">{this.props.navType === 'detail' ? '房源详情' : '新增房源'}</div>
+            </div>
+            : <div>
+              <div className="nav__left">
+                <span className="nav__logo">租房!</span>
+              </div>
+              <div className="nav__right">
+                <Button type="primary" onClick={() => {
+                  this.props.setNavType('add')
+                  this.props.push('/add')
+                }
+                }>发布房源</Button>
+              </div>
+            </div>
+        }
       </nav>
     )
   }
