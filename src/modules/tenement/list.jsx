@@ -18,6 +18,15 @@ export default class List extends Component {
   }
   componentDidMount() {
     this.getData()
+    var container = document.getElementsByClassName('container')[0]
+    container.onscroll = () => {
+      var divScrollTop = container.scrollTop
+      var divClientHeight = container.clientHeight
+      var divScrollHeight = container.scrollHeight
+      if (divScrollTop + divClientHeight >= divScrollHeight) {
+        this.loadMore()
+      }
+    }
   }
   getData = () => {
     axios.get(
