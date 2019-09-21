@@ -1,3 +1,96 @@
-a {
-  text-decoration: none;
-}
+* {
+    box-sizing: border-box;
+  }
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  body, h1, h2, h3, h4, h5, h6, p, dl, dd, ul, ol, pre, blockquote, textarea, input, button, hr, figure {
+    margin: 0;
+  }
+  ul, ol, th, td, button, textarea, input {
+    padding: 0;
+  }
+  ul, ol {
+    list-style: none;
+  }
+  article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+    display: block;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+  }
+  em, i {
+    font-style: normal;
+  }
+  img {
+    vertical-align: top;
+    border: none;
+  }
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sup {
+    top: -0.5em;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  svg:not(:root) {
+    overflow: hidden;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  input, select {
+    border: none;
+    vertical-align: middle;
+    outline: none;
+  }
+  button,
+  html input[type="button"], /* 1 */
+  input[type="reset"],
+  input[type="submit"] {
+    outline: none;
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer; /* 3 */
+  }
+  textarea {
+    resize: vertical;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  html, body {
+    height: 100%;
+  }
+  a, a:hover, a:active {
+    cursor: pointer;
+    outline: 0;
+    text-decoration: none;
+    background-color: transparent;
+  }
+  input, textarea, select {
+    font-family: 'Microsoft YaHei', 'SimSun', Arial, Helvetica;
+  }
+  html {
+    font-family: 'Microsoft YaHei', 'SimSun', Arial, Helvetica;
+  }
+  a {
+    color: inherit;
+  }
+  a:hover {
+    color: inherit;
+  }
+  :-moz-placeholder,
+  ::-moz-placeholder,
+  :-ms-input-placeholder,
+  ::-webkit-input-placeholder {
+    color: #999;
+  }

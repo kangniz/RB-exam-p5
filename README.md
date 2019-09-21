@@ -27,3 +27,8 @@
 3. [国际化](http://reference.sdp.nd/fed/share/common/react-boilerplate/i18n.html)
 4. [常见问题](http://reference.sdp.nd/fed/share/common/react-boilerplate/questions.html)
 5. [提问](http://git.sdp.nd/fed/react-boilerplate/issues)
+
+
+## 代码格式检查
+* npm run lint  //会执行样式检查(css/less/scss)以及js检查（js/jsx）
+* npm run lint --fix    //可以自动修复通常效果一般，推荐修复后手动进行修改

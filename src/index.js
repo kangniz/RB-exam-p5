@@ -1,4 +1,3 @@
-import 'theme/styles/app.css'
 import 'theme/styles/app.scss'
 // 使用babel-plugin-transform-runtime不能完全代替babel-polyfill
 import 'babel-polyfill'
